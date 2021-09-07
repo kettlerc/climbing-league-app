@@ -1,10 +1,8 @@
 import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector} from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,20 +11,10 @@ import Button from '@material-ui/core/Button';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import InfoIcon from '@material-ui/icons/Info';
 
-
-
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
 
 function UserPage() {
-  const classes = useStyles();
   const user = useSelector((store) => store.user);
   const history = useHistory();
 
@@ -56,6 +44,11 @@ function UserPage() {
       text: 'LEADERBOARDS',
       icon: <FormatListNumberedIcon />,
       path: '/leaderboards'
+    },
+    {
+      text: 'ABOUT',
+      icon: <InfoIcon />,
+      path: '/about'
     }
   ]
 
@@ -94,7 +87,7 @@ function UserPage() {
           </Drawer>
         </React.Fragment>
       ))}
-    </div>
+      </div>
     </div>
   );
 }
