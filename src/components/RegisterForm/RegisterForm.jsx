@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [flashLevel, setFlashLevel] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [teamId, setTeamId] = useState(1);
+
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -15,6 +21,11 @@ function RegisterForm() {
       payload: {
         username: username,
         password: password,
+        firstName: firstName,
+        lastName: lastName,
+        flashLevel: flashLevel,
+        photo: photo,
+        teamId: teamId
       },
     });
   }; // end registerUser
@@ -29,10 +40,10 @@ function RegisterForm() {
       )}
       <div>
         <label htmlFor="username">
-          Username:
           <input
             type="text"
             name="username"
+            placeholder="username"
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
@@ -41,15 +52,56 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="password">
-          Password:
           <input
             type="password"
             name="password"
+            placeholder="password"
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
+      </div>
+      <div>
+        <label htmlFor="firstName">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="first name"
+            value={firstName}
+            required
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="lastName">
+          <input
+            type="text"
+            name="lastName"
+            placeholder="last name"
+            value={lastName}
+            required
+            onChange={(event) => setLastName(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <h3>Flash Level</h3>
+      </div>
+      <div>
+        <label htmlFor="team">
+          Choose your team:</label>
+        <select 
+          name="teams"
+          value={teamId}
+          required
+          onChange={(event) => setTeamId(event.target.value)}>
+            {/* hard coded in, needs to be retrieved via a reducer from the db */}
+            <option value="1">Rock Crushers</option>
+            <option value="2">Hard Rock</option>
+            <option value="3">We Climb Good</option>
+        </select>
       </div>
       <div>
         <input className="btn" type="submit" name="submit" value="Register" />
