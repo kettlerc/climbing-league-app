@@ -1,13 +1,14 @@
 import React from 'react';
 import './Nav.css';
+import Typography from '@material-ui/core/Typography';
 
 function Nav() {
   return (
     <div className="nav">
-      <h2 className="nav-title">CLIMBING LEAGUE</h2>
-      <div>
-        
-      </div>
+      <Typography
+        variant="h2"
+        align="center"
+      >CLIMBING LEAGUE</Typography>
     </div>
   );
 }
