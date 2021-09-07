@@ -7,6 +7,7 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   return (
     <div className="container">
+      <img src={user.photo} alt="" />
       <h2>{user.firstName} {user.lastName}</h2>
       <h3>{user.flashLevel}</h3>
       <LogOutButton className="btn" />
