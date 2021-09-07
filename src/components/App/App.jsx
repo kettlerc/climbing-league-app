@@ -15,9 +15,11 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import AddClimb from '../AddClimb/AddClimb';
+import SubmitScores from '../SubmitScores/SubmitScores';
+import Leaderboards from '../Leaderboards/Leaderboards';
 
 import './App.css';
 
@@ -60,11 +62,24 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
             exact
-            path="/info"
+            path="/addclimb"
           >
-            <InfoPage />
+            <AddClimb />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/submitscores"
+          >
+            <SubmitScores />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/leaderboards"
+          >
+            <Leaderboards />
           </ProtectedRoute>
 
           <Route
@@ -92,20 +107,6 @@ function App() {
               :
               // Otherwise, show the registration page
               <RegisterPage />
-            }
-          </Route>
-
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the Landing page
-              <UserPage />
             }
           </Route>
 
