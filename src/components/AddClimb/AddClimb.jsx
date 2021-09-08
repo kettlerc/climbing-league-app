@@ -1,12 +1,17 @@
 import {useSelector} from 'react-redux';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
 import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+
 
 function AddClimb() {
     const user = useSelector((store) => store.user);
     const teams = useSelector((store) => store.team);
+    const history = useHistory();
 
+    //local state for the form
     const [climbType, setClimbType] = useState('');
     const [value, setValue] = useState(0.1);
     const [grade, setGrade] = useState('5.7');
@@ -17,6 +22,17 @@ function AddClimb() {
     const [isBonus, setIsBonus] = useState(false);
     const [bonusChecked, setBonusChecked] = useState(false);
     const [score, setScore] = useState(10);
+
+    //parameters for choose climb dropdown
+    const chooseClimbType = (event) => {
+        setClimbType(event.target.value);
+        if (climbType === 'Top Rope') {
+            setScore(score + 1);
+        } else if (climbType === 'Lead'){
+            setScore(score + 2);
+        }
+        return score;
+    }
 
     //variables and parameters for circular input
     const stepValue = v => Math.round(v * 10) / 10
@@ -96,6 +112,7 @@ function AddClimb() {
         return score;
     }
 
+    //submit climb function
     const submitClimb = () => {
         let climb = {
             climbType,
@@ -106,6 +123,10 @@ function AddClimb() {
             score
         }
         console.log(climb);
+    }
+
+    const goBack = () => {
+        history.push('/user');
     }
 
     return (
@@ -121,7 +142,8 @@ function AddClimb() {
                     <select 
                         value={climbType}
                         required
-                        onChange={(event) => setClimbType(event.target.value)}>
+                        onChange={chooseClimbType}>
+                            <option>CLIMB TYPE</option>
                             <option value="Auto Belay">Auto Belay</option>
                             <option value="Top Rope">Top Rope</option>
                             <option value="Lead">Lead</option>
@@ -166,7 +188,8 @@ function AddClimb() {
                 <div>
                     <h2>SCORE: {score}</h2>
                 </div>
-                <button onClick={submitClimb}>SUBMIT CLIMB</button>
+                <Button variant="outlined" onClick={goBack}>BACK</Button>
+                <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
             </form>
         </div>
     )

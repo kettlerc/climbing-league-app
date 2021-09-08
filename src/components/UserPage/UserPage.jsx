@@ -1,5 +1,4 @@
 import React from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
@@ -77,7 +76,6 @@ function UserPage() {
       <img src={user.photo} alt="" />
       <h2>{user.firstName} {user.lastName}</h2>
       <h3>{user.flashLevel}</h3>
-      <LogOutButton className="btn" />
       <div>
       {['CLIMB ON'].map((anchor) => (
         <React.Fragment key={anchor}>

@@ -44,13 +44,11 @@ function RegisterForm() {
     });
   }; // end registerUser
 
+  //parameters for circular input
   const stepValue = v => Math.round(v * 10) / 10
-
   const min = 0.1
   const max = 0.9
-
   const valueWithinLimits = v => Math.min(Math.max(v, min), max)
-
   const changeValue = v => {
       setValue(stepValue(v));
       switch(value) {
