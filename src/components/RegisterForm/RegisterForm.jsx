@@ -4,6 +4,7 @@ import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from '
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import Select from '@material-ui/core/Select';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ function RegisterForm() {
   const [lastName, setLastName] = useState('');
   const [flashLevel, setFlashLevel] = useState('5.7');
   const [photo, setPhoto] = useState('');
-  const [teamId, setTeamId] = useState();
+  const [teamId, setTeamId] = useState('');
 
   const [value, setValue] = useState(0.1);
 
@@ -86,7 +87,7 @@ function RegisterForm() {
   return (
     <form className="formPanel" onSubmit={registerUser}>
       <center>
-      <h2>Register New Climber</h2>
+      <Typography variant="h4">REGISTER</Typography>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
@@ -168,26 +169,27 @@ function RegisterForm() {
           </CircularInput>
       </div>
       <div>
-        <TextField 
+        <Typography variant="h6" gutterBottom>TEAM</Typography>
+      </div>
+      <div>
+        <select
           variant="outlined"
-          select
-          helperText="Select your team"
           value={teamId}
           required
           onChange={(event) => setTeamId(event.target.value)}>
           {teams.map(team => {
             return (
-              <option key={team.id}>{team.name}</option>
+              <option key={team.id}>{team.teamName}</option>
             );
           })}
-        </TextField>
+        </select>
       </div>
       <div>
         <Button
           variant="outlined"
           className="btn"
           type="submit"
-        >Submit</Button>
+        >Register & Login</Button>
       </div>
       </center>
     </form>
