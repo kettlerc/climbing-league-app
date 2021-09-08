@@ -154,18 +154,18 @@ function RegisterForm() {
             value={valueWithinLimits(value)}
             onChange={changeValue}
             radius={50}>
-            <CircularTrack className="circularTrack"/>
-            <CircularProgress className="circularProgress"/>
-            <CircularThumb className="circularThumb"/>
-            <text 
-                x={50} 
-                y={50} 
-                textAnchor="middle" 
-                dy="0.3em"
-                fontSize="25" 
-                fontWeight="bold">
-                {flashLevel}
-            </text>
+              <CircularTrack className="circularTrack"/>
+              <CircularProgress className="circularProgress"/>
+              <CircularThumb className="circularThumb"/>
+              <text 
+                  x={50} 
+                  y={50} 
+                  textAnchor="middle" 
+                  dy="0.3em"
+                  fontSize="25" 
+                  fontWeight="bold">
+                  {flashLevel}
+              </text>
           </CircularInput>
       </div>
       <div>
