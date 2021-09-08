@@ -55,6 +55,26 @@ function AddClimb() {
             }
         }
 
+    const flashCheckbox = () => {
+        setScore(score + 1);
+        setIsFlash(true);
+        return score;
+    }
+
+
+
+    const submitClimb = () => {
+        let climb = {
+            climbType,
+            grade,
+            isFlash,
+            isOnSight,
+            isBonus,
+            score
+        }
+        console.log(climb);
+    }
+
     return (
         <div className="container">
             <div>
@@ -94,12 +114,20 @@ function AddClimb() {
                     </CircularInput>
                 </div>
                 <div>
-                    
+                    <h3>Flash:</h3>
+                    <Checkbox 
+                        onChange={flashCheckbox}
+                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+                    <h3>On Sight:</h3>
+                    <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+                    <h3>Bonus:</h3>
+                    <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </div>
+                <div>
+                    <h2>SCORE: {score}</h2>
+                </div>
+                <button onClick={submitClimb}>SUBMIT CLIMB</button>
             </form>
-            <div>
-                <h2>SCORE: {score}</h2>
-            </div>
         </div>
     )
 }
