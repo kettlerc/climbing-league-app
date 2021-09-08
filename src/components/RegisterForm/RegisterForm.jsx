@@ -12,11 +12,12 @@ function RegisterForm() {
   const [lastName, setLastName] = useState('');
   const [flashLevel, setFlashLevel] = useState('5.7');
   const [photo, setPhoto] = useState('');
-  const [teamId, setTeamId] = useState(1);
+  const [teamId, setTeamId] = useState();
 
   const [value, setValue] = useState(0.1);
 
   const errors = useSelector((store) => store.errors);
+  const teams = useSelector((store) => store.team);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -174,10 +175,11 @@ function RegisterForm() {
           value={teamId}
           required
           onChange={(event) => setTeamId(event.target.value)}>
-            {/* hard coded in, needs to be retrieved via a reducer from the db */}
-            <option value="1">Rock Crushers</option>
-            <option value="2">Hard Rock</option>
-            <option value="3">We Climb Good</option>
+          {teams.map(team => {
+            return (
+              <option key={team.id}>{team.name}</option>
+            );
+          })}
         </TextField>
       </div>
       <div>
