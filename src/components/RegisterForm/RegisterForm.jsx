@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
@@ -15,6 +18,12 @@ function RegisterForm() {
 
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_TEAMS'
+    });
+  }, [dispatch]);
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -84,10 +93,11 @@ function RegisterForm() {
       )}
       <div>
         <label htmlFor="username">
-          <input
-            type="text"
+          <TextField
+            variant="outlined"
             name="username"
             placeholder="username"
+            size="small"
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
@@ -96,10 +106,11 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="password">
-          <input
-            type="password"
+          <TextField
+            variant="outlined"
             name="password"
             placeholder="password"
+            size="small"
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
@@ -108,10 +119,11 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="firstName">
-          <input
-            type="text"
+          <TextField
+            variant="outlined"
             name="firstName"
             placeholder="first name"
+            size="small"
             value={firstName}
             required
             onChange={(event) => setFirstName(event.target.value)}
@@ -120,10 +132,11 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="lastName">
-          <input
-            type="text"
+          <TextField
+            variant="outlined"
             name="lastName"
             placeholder="last name"
+            size="small"
             value={lastName}
             required
             onChange={(event) => setLastName(event.target.value)}
@@ -131,7 +144,7 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <h3>Flash Level</h3>
+        <Typography variant="h6" gutterBottom>FLASH LEVEL</Typography>
       </div>
       <div>
         <label htmlFor="flashLevel"></label>
@@ -154,10 +167,10 @@ function RegisterForm() {
           </CircularInput>
       </div>
       <div>
-        <label htmlFor="team">
-          Choose your team:</label>
-        <select 
-          name="teams"
+        <TextField 
+          variant="outlined"
+          select
+          helperText="Select your team"
           value={teamId}
           required
           onChange={(event) => setTeamId(event.target.value)}>
@@ -165,10 +178,14 @@ function RegisterForm() {
             <option value="1">Rock Crushers</option>
             <option value="2">Hard Rock</option>
             <option value="3">We Climb Good</option>
-        </select>
+        </TextField>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        <Button
+          variant="outlined"
+          className="btn"
+          type="submit"
+        >Submit</Button>
       </div>
       </center>
     </form>
