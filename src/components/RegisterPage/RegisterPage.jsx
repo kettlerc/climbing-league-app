@@ -18,7 +18,7 @@ function RegisterPage() {
             history.push('/login');
           }}
         >
-          RETURN TO LOGIN
+          BACK
         </Button>
       </center>
     </div>
