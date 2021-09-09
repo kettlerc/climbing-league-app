@@ -14,7 +14,7 @@ function RegisterForm() {
   const [flashLevel, setFlashLevel] = useState('5.7');
   const [gradeValue, setGradeValue] = useState(0);
   const [photo, setPhoto] = useState('');
-  const [teamId, setTeamId] = useState('');
+  const [teamId, setTeamId] = useState(0);
 
   const [value, setValue] = useState(0.1);
 

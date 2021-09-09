@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -7,6 +8,7 @@ import Button from '@material-ui/core/Button';
 
 function AddClimb() {
     const history = useHistory();
+    const user = useSelector((store) => store.user);
     
     //local state for the form
     const [climbType, setClimbType] = useState('');
@@ -33,6 +35,15 @@ function AddClimb() {
         return score;
     }
 
+    const compareGrade = () => {
+        if((value * 10) > user.gradeLevel){
+            console.log('is this working???', value, user.gradeLevel);
+            let newScore = (value * 10) - user.gradeLevel;
+            setScore(score + newScore);
+        }
+        return score;
+    }
+
     //variables and parameters for circular input
     const stepValue = v => Math.round(v * 10) / 10
     const min = 0.1
@@ -42,30 +53,39 @@ function AddClimb() {
         setValue(stepValue(v));
         switch(value) {
             case 0.1:
+                compareGrade();
                 setGrade('5.7')
                 break;
             case 0.2:
+                compareGrade();
                 setGrade('5.8')
                 break;
             case 0.3:
+                compareGrade();
                 setGrade('5.9')
                 break;
             case 0.4:
+                compareGrade();
                 setGrade('5.10')
                 break;
             case 0.5:
+                compareGrade();
                 setGrade('5.11-')
                 break;
             case 0.6:
+                compareGrade();
                 setGrade('5.11+')
                 break;
             case 0.7:
+                compareGrade();
                 setGrade('5.12-')
                 break;
             case 0.8:
+                compareGrade();
                 setGrade('5.12+')
                 break;
             case 0.9:
+                compareGrade();
                 setGrade('5.13-')
                 break;
             }
