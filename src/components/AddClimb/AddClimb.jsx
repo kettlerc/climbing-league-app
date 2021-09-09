@@ -1,4 +1,3 @@
-import {useSelector} from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
@@ -7,8 +6,6 @@ import Button from '@material-ui/core/Button';
 
 
 function AddClimb() {
-    const user = useSelector((store) => store.user);
-    const teams = useSelector((store) => store.team);
     const history = useHistory();
 
     //local state for the form
@@ -26,7 +23,9 @@ function AddClimb() {
     //parameters for choose climb dropdown
     const chooseClimbType = (event) => {
         setClimbType(event.target.value);
-        if (climbType === 'Top Rope') {
+        if (climbType === 'Auto Belay') {
+            return score;
+        } else if (climbType === 'Top Rope') {
             setScore(score + 1);
         } else if (climbType === 'Lead'){
             setScore(score + 2);
@@ -131,12 +130,6 @@ function AddClimb() {
 
     return (
         <div className="container">
-            <div>
-                <img src={user.photo} alt="" />
-                <h2>{user.firstName} {user.lastName}</h2>
-                <h3>{user.flashLevel}</h3>
-                <h3>{user.teamId}</h3>
-            </div>
             <form>
                 <div>
                     <select 

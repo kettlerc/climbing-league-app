@@ -1,5 +1,5 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -14,20 +14,26 @@ import InfoIcon from '@material-ui/icons/Info';
 
 
 function UserPage() {
-  const user = useSelector((store) => store.user);
+  const userInfo = useSelector((store) => store.userInfo);
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_USER_INFO'
+    });
+  }, [dispatch])
+
+  //parameters for drawer component
   const [state, setState] = React.useState({
     left: false,
   });
-
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setState({ ...state, [anchor]: open });
   };
-
   const menuItems = [
     {
       text: 'ADD CLIMB',
@@ -50,7 +56,6 @@ function UserPage() {
       path: '/about'
     }
   ]
-
   const list = (anchor) => (
     <div
       role="presentation"
@@ -71,11 +76,14 @@ function UserPage() {
     </div>
   );
 
+
+
   return (
     <div className="container">
-      <img src={user.photo} alt="" />
-      <h2>{user.firstName} {user.lastName}</h2>
-      <h3>{user.flashLevel}</h3>
+      <img src={userInfo.photo} alt="" />
+      <h2>{userInfo.firstName} {userInfo.lastName}</h2>
+      <h3>{userInfo.flashLevel}</h3>
+      <h3>{userInfo.teamName}</h3>
       <div>
       {['CLIMB ON'].map((anchor) => (
         <React.Fragment key={anchor}>
