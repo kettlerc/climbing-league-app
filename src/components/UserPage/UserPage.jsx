@@ -14,15 +14,17 @@ import InfoIcon from '@material-ui/icons/Info';
 
 
 function UserPage() {
-  const userInfo = useSelector((store) => store.userInfo);
+  const user = useSelector((store) => store.user);
+  const userInfo = useSelector((store) => store.userinfo);
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({
-      type: 'FETCH_USER_INFO'
-    });
-  }, [dispatch])
+      type: 'FETCH_USER_INFO',
+      payload: user.id
+    })
+  }, [dispatch]);
 
   //parameters for drawer component
   const [state, setState] = React.useState({
@@ -75,15 +77,15 @@ function UserPage() {
       </List>
     </div>
   );
-
-
+  
 
   return (
     <div className="container">
-      <img src={userInfo.photo} alt="" />
-      <h2>{userInfo.firstName} {userInfo.lastName}</h2>
-      <h3>{userInfo.flashLevel}</h3>
-      <h3>{userInfo.teamName}</h3>
+      <div>
+        <h2>{userInfo.firstName} {userInfo.lastName}</h2>
+        <h3>{userInfo.flashLevel}</h3>
+        <h3>{userInfo.teamName}</h3>
+      </div>
       <div>
       {['CLIMB ON'].map((anchor) => (
         <React.Fragment key={anchor}>
