@@ -5,16 +5,18 @@ CREATE TABLE "user" (
     "firstName" VARCHAR (80) NOT NULL,
     "lastName" VARCHAR (80) NOT NULL,
     "flashLevel" VARCHAR (10) NOT NULL,
+    "gradeLevel" INTEGER NOT NULL,
     "photo" VARCHAR (256),
     "teamId" INT REFERENCES "team"
 );
 
-INSERT INTO "user"
-("username", "password", "firstName", "lastName", "flashLevel", "photo", "teamId")
-VALUES
-('curtisClimbs', '123456', 'Curtis', 'Kettler', '5.9', 'imgurl', 1),
-('FreeSolo', '123456', 'Alex', 'Honold', '5.14', 'imgurl', 1),
-('cliffhanger4eva', '123456', 'Sylvester', 'Stallone', '5.10', 'imgurl', 1);
+
+-- INSERT INTO "user"
+-- ("username", "password", "firstName", "lastName", "flashLevel", "photo", "teamId")
+-- VALUES
+-- ('curtisClimbs', '123456', 'Curtis', 'Kettler', '5.9', 'imgurl', 1),
+-- ('FreeSolo', '123456', 'Alex', 'Honold', '5.14', 'imgurl', 1),
+-- ('cliffhanger4eva', '123456', 'Sylvester', 'Stallone', '5.10', 'imgurl', 1);
 
 
 DROP TABLE "user";
@@ -67,3 +69,13 @@ VALUES
 ('Top Rope', '5.10', true, false, false, '2020-11-11', 1);
 
 DROP TABLE "scores";
+
+SELECT
+	"firstName",
+	"lastName",
+	"flashLevel",
+	"photo",
+	"teamName"
+FROM "user"
+JOIN "team" ON "user"."teamId" = "team"."id"
+WHERE "user"."id" = 1;

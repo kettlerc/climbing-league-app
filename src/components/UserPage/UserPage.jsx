@@ -11,6 +11,7 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import InfoIcon from '@material-ui/icons/Info';
+import LogOutButton from '../LogOutButton/LogOutButton';
 
 
 function UserPage() {
@@ -83,6 +84,7 @@ function UserPage() {
         </React.Fragment>
       ))}
       </div>
+      <LogOutButton className="navLink" />
     </div>
   );
 }

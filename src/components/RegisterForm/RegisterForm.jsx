@@ -39,9 +39,9 @@ function RegisterForm() {
         firstName: firstName,
         lastName: lastName,
         flashLevel: flashLevel,
+        gradeLevel: gradeValue,
         photo: photo,
-        teamId: teamId,
-        gradeLevel: gradeLevel
+        teamId: teamId
       },
     });
   }; // end registerUser
@@ -188,7 +188,7 @@ function RegisterForm() {
           onChange={(event) => setTeamId(event.target.value)}>
           {teams.map(team => {
             return (
-              <option key={team.id}>{team.teamName}</option>
+              <option key={team.id}>{team.id}</option>
             );
           })}
         </select>

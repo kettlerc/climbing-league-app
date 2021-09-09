@@ -24,14 +24,15 @@ router.post('/register', (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const flashLevel = req.body.flashLevel;
+  const gradeLevel = req.body.gradeLevel;
   const photo = req.body.photo;
   const teamId = req.body.teamId;
 
   const queryText = `INSERT INTO "user" 
-  ("username", "password", "firstName", "lastName", "flashLevel", "photo", "teamId")
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+  ("username", "password", "firstName", "lastName", "flashLevel", "gradeLevel", "photo", "teamId")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
   pool
-    .query(queryText, [username, password, firstName, lastName, flashLevel, photo, teamId])
+    .query(queryText, [username, password, firstName, lastName, flashLevel, gradeLevel, photo, teamId])
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.log('User registration failed: ', err);
