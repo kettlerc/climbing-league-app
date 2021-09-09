@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 function AddClimb() {
     const history = useHistory();
-
+    
     //local state for the form
     const [climbType, setClimbType] = useState('');
     const [value, setValue] = useState(0.1);

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -14,17 +14,8 @@ import InfoIcon from '@material-ui/icons/Info';
 
 
 function UserPage() {
-  const user = useSelector((store) => store.user);
-  const userInfo = useSelector((store) => store.userinfo);
   const history = useHistory();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({
-      type: 'FETCH_USER_INFO',
-      payload: user.id
-    })
-  }, [dispatch]);
 
   //parameters for drawer component
   const [state, setState] = React.useState({
@@ -81,11 +72,7 @@ function UserPage() {
 
   return (
     <div className="container">
-      <div>
-        <h2>{userInfo.firstName} {userInfo.lastName}</h2>
-        <h3>{userInfo.flashLevel}</h3>
-        <h3>{userInfo.teamName}</h3>
-      </div>
+      
       <div>
       {['CLIMB ON'].map((anchor) => (
         <React.Fragment key={anchor}>

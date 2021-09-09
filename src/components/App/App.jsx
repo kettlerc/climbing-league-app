@@ -20,6 +20,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import AddClimb from '../AddClimb/AddClimb';
 import SubmitScores from '../SubmitScores/SubmitScores';
 import Leaderboards from '../Leaderboards/Leaderboards';
+import UserInfo from '../UserInfo/UserInfo';
 
 import './App.css';
 
@@ -58,6 +59,7 @@ function App() {
             exact
             path="/user"
           >
+            <UserInfo />
             <UserPage />
           </ProtectedRoute>
 
@@ -65,6 +67,7 @@ function App() {
             exact
             path="/addclimb"
           >
+            <UserInfo />
             <AddClimb />
           </ProtectedRoute>
 
@@ -72,6 +75,7 @@ function App() {
             exact
             path="/submitscores"
           >
+            <UserInfo />
             <SubmitScores />
           </ProtectedRoute>
 
@@ -79,6 +83,7 @@ function App() {
             exact
             path="/leaderboards"
           >
+            <UserInfo />
             <Leaderboards />
           </ProtectedRoute>
 
