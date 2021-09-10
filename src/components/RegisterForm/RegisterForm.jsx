@@ -12,8 +12,9 @@ function RegisterForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [flashLevel, setFlashLevel] = useState('5.7');
+  const [gradeValue, setGradeValue] = useState(0);
   const [photo, setPhoto] = useState('');
-  const [teamId, setTeamId] = useState('');
+  const [teamId, setTeamId] = useState(0);
 
   const [value, setValue] = useState(0.1);
 
@@ -38,48 +39,56 @@ function RegisterForm() {
         firstName: firstName,
         lastName: lastName,
         flashLevel: flashLevel,
+        gradeLevel: gradeValue,
         photo: photo,
         teamId: teamId
       },
     });
   }; // end registerUser
 
+  //parameters for circular input
   const stepValue = v => Math.round(v * 10) / 10
-
   const min = 0.1
   const max = 0.9
-
   const valueWithinLimits = v => Math.min(Math.max(v, min), max)
-
   const changeValue = v => {
       setValue(stepValue(v));
       switch(value) {
           case 0.1:
               setFlashLevel('5.7')
+              setGradeValue(1)
               break;
           case 0.2:
               setFlashLevel('5.8')
+              setGradeValue(2)
               break;
           case 0.3:
               setFlashLevel('5.9')
+              setGradeValue(3)
               break;
           case 0.4:
               setFlashLevel('5.10')
+              setGradeValue(4)
               break;
           case 0.5:
               setFlashLevel('5.11-')
+              setGradeValue(5)
               break;
           case 0.6:
               setFlashLevel('5.11+')
+              setGradeValue(6)
               break;
           case 0.7:
               setFlashLevel('5.12-')
+              setGradeValue(7)
               break;
           case 0.8:
               setFlashLevel('5.12+')
+              setGradeValue(8)
               break;
           case 0.9:
               setFlashLevel('5.13-')
+              setGradeValue(9)
               break;
         }
     }
@@ -179,7 +188,7 @@ function RegisterForm() {
           onChange={(event) => setTeamId(event.target.value)}>
           {teams.map(team => {
             return (
-              <option key={team.id}>{team.teamName}</option>
+              <option key={team.id}>{team.id}</option>
             );
           })}
         </select>

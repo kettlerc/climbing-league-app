@@ -1,6 +1,5 @@
 import React from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -12,23 +11,25 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import InfoIcon from '@material-ui/icons/Info';
+import LogOutButton from '../LogOutButton/LogOutButton';
+
+import './userPage.css';
 
 
 function UserPage() {
-  const user = useSelector((store) => store.user);
   const history = useHistory();
 
+
+  //parameters for drawer component
   const [state, setState] = React.useState({
     left: false,
   });
-
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setState({ ...state, [anchor]: open });
   };
-
   const menuItems = [
     {
       text: 'ADD CLIMB',
@@ -51,7 +52,6 @@ function UserPage() {
       path: '/about'
     }
   ]
-
   const list = (anchor) => (
     <div
       role="presentation"
@@ -71,22 +71,22 @@ function UserPage() {
       </List>
     </div>
   );
+  
 
   return (
     <div className="container">
-      <img src={user.photo} alt="" />
-      <h2>{user.firstName} {user.lastName}</h2>
-      <h3>{user.flashLevel}</h3>
-      <LogOutButton className="btn" />
+      <div className="drawerButton">
+        {['CLIMB ON'].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+            <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </div>
       <div>
-      {['CLIMB ON'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
+        <LogOutButton className="navLink" />
       </div>
     </div>
   );

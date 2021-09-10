@@ -28,6 +28,7 @@ function Footer() {
           </>
         )}
   return <footer>&copy; Curtis Kettler 2021</footer>;
+
 }
 
 export default Footer;

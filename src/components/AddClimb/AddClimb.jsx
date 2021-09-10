@@ -1,29 +1,65 @@
-import {useSelector} from 'react-redux';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
-import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import Typography from '@material-ui/core/Typography';
 
 function AddClimb() {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
-    const teams = useSelector((store) => store.team);
-
+    
+    //local state for the form
     const [climbType, setClimbType] = useState('');
     const [value, setValue] = useState(0.1);
     const [grade, setGrade] = useState('5.7');
     const [isFlash, setIsFlash] = useState(false);
     const [isOnSight, setIsOnSight] = useState(false);
     const [isBonus, setIsBonus] = useState(false);
+    const [bonusPoints, setBonusPoints] = useState(0);
+    const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [date, setDate] = useState('2008-11-11');
 
+
+    //parameters for choose climb dropdown
+    const chooseClimbType = (event, climbType) => {
+        setClimbType(climbType);
+        if (climbType === 'Auto Belay') {
+            setScoreOne(10);
+        } 
+        else if (climbType === 'Top Rope') {
+            setScoreOne(11);
+        } 
+        else if (climbType === 'Lead'){
+            setScoreOne(12);
+        }
+        return score;
+    }//end chooseClimbType
+
+    //function to compare climb grade against flash level
+    const compareGrade = () => {
+        if((value * 10) > user.gradeLevel){
+            let newScore = (value * 10) - user.gradeLevel;
+            setScore(scoreOne + newScore);
+        } else {
+            setScore(scoreOne);
+        }
+        return score;
+    }//end compareGrade
+
+    //variables and parameters for circular input
     const stepValue = v => Math.round(v * 10) / 10
-
     const min = 0.1
     const max = 0.9
-
     const valueWithinLimits = v => Math.min(Math.max(v, min), max)
-
     const changeValue = v => {
         setValue(stepValue(v));
+        compareGrade();
         switch(value) {
             case 0.1:
                 setGrade('5.7')
@@ -55,51 +91,108 @@ function AddClimb() {
             }
         }
 
+    //function for adding extra bonus points
+    const checkBonusPoints = (event, bonusPoints) => {
+        setBonusPoints(bonusPoints);
+        console.log('bonus points:', bonusPoints);
+        if('Flash'){
+            setScore(score + 1);
+        }
+        if('OnSight'){
+            setScore(score + 1);
+        } 
+        if('Bonus'){
+            setScore(score + 1);
+        }  
+    }//end checkBonusPoints
+
+    //submit climb function
+    const submitClimb = () => {
+        compareGrade();
+        let climb = {
+            climbType,
+            climbGrade: grade,
+            isFlash,
+            isOnSight,
+            isBonus,
+            isSubmitted,
+            climbScore: score,
+            date: date,
+            climberId: user.id
+        }
+        console.log(climb);
+
+        dispatch({
+            type: 'ADD_CLIMB',
+            payload: climb
+        });
+
+        history.push('/user');
+    }//end submitClimb
+
+    //function to return to home page
+    const goBack = () => {
+        history.push('/user');
+    }//end goBack
+
+
     return (
         <div className="container">
-            <div>
-                <img src={user.photo} alt="" />
-                <h2>{user.firstName} {user.lastName}</h2>
-                <h3>{user.flashLevel}</h3>
-                <h3>{user.teamId}</h3>
-            </div>
             <form>
-                <div>
-                    <select 
-                        value={climbType}
-                        required
-                        onChange={(event) => setClimbType(event.target.value)}>
-                            <option value="Auto Belay">Auto Belay</option>
-                            <option value="Top Rope">Top Rope</option>
-                            <option value="Lead">Lead</option>
-                    </select>
-                </div>
-                <div>
-                    <CircularInput
-                        value={valueWithinLimits(value)}
-                        onChange={changeValue}
-                        radius={50}>
-                            <CircularTrack className="circularTrack"/>
-                            <CircularProgress className="circularProgress"/>
-                            <CircularThumb className="circularThumb"/>
-                            <text 
-                                x={50} 
-                                y={50} 
-                                textAnchor="middle" 
-                                dy="0.3em"
-                                fontSize="25" 
-                                fontWeight="bold">
-                                {grade}
-                            </text>
-                    </CircularInput>
-                </div>
-                <div>
-                    
-                </div>
+                <center>
+                    <div>
+                        <ToggleButtonGroup
+                            value={climbType}
+                            exclusive
+                            onChange={chooseClimbType}
+                        >
+                            <ToggleButton value="Auto Belay">AUTO BELAY</ToggleButton>
+                            <ToggleButton value="Top Rope">TOP ROPE</ToggleButton>
+                            <ToggleButton value="Lead">LEAD</ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
+                    <div>
+                        <CircularInput
+                            value={valueWithinLimits(value)}
+                            onChange={changeValue}
+                            radius={70}>
+                                <CircularTrack className="circularTrack"/>
+                                <CircularProgress className="circularProgress"/>
+                                <CircularThumb className="circularThumb"/>
+                                <text 
+                                    x={70} 
+                                    y={70} 
+                                    textAnchor="middle" 
+                                    dy="0.3em"
+                                    fontSize="35" 
+                                    fontWeight="bold">
+                                    {grade}
+                                </text>
+                        </CircularInput>
+                    </div>
+                    <div>
+                        <ToggleButtonGroup
+                            value={bonusPoints}
+                            onChange={checkBonusPoints}
+                        >
+                            <ToggleButton value="Flash">FLASH</ToggleButton>
+                            <ToggleButton value="OnSight">ON SIGHT</ToggleButton>
+                            <ToggleButton value="Bonus">BONUS</ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
+                    <div>
+                        <Typography 
+                            variant="h4"
+                            align="center"
+                        >SCORE: {score}
+                        </Typography>
+                    </div>
+                    <div>
+                        <Button variant="outlined" onClick={goBack}>BACK</Button>
+                        <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
+                    </div>
+                </center>
             </form>
-            <div>
-                <h2>SCORE: {score}</h2>
-            </div>
         </div>
     )
 }
