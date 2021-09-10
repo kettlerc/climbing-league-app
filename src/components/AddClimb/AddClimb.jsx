@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Typography from '@material-ui/core/Typography';
+import { NoteTwoTone } from '@material-ui/icons';
 
 
 function AddClimb() {
     const history = useHistory();
+    const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
     
     //local state for the form
@@ -23,6 +25,7 @@ function AddClimb() {
     const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [date, setDate] = useState('2008-11-11');
 
 
     //parameters for choose climb dropdown
@@ -110,14 +113,21 @@ function AddClimb() {
         compareGrade();
         let climb = {
             climbType,
-            grade,
+            climbGrade: grade,
             isFlash,
             isOnSight,
             isBonus,
             isSubmitted,
-            score
+            climbScore: score,
+            date: date,
+            climberId: user.id
         }
         console.log(climb);
+
+        dispatch({
+            type: 'ADD_CLIMB',
+            payload: climb
+        })
     }//end submitClimb
 
     //function to return to home page
