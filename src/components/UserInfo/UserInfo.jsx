@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { Typography } from '@material-ui/core';
 
 function UserInfo() {
     const user = useSelector((store) => store.user);
@@ -16,9 +17,9 @@ function UserInfo() {
 
     return (
         <div>
-            <h2>{userInfo.firstName} {userInfo.lastName}</h2>
-            <h3>{userInfo.flashLevel}</h3>
-            <h3>{userInfo.teamName}</h3>
+            <Typography variant="h4" align="right">{userInfo.firstName} {userInfo.lastName}</Typography>
+            <Typography variant="subtitle1" align="right">{userInfo.flashLevel}</Typography>
+            <Typography variant="subtitle1" align="right">{userInfo.teamName}</Typography>
       </div>
     )
 }

@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import Typography from '@material-ui/core/Typography';
 
 
 function AddClimb() {
@@ -43,9 +43,10 @@ function AddClimb() {
     //function to compare climb grade against flash level
     const compareGrade = () => {
         if((value * 10) > user.gradeLevel){
-            console.log('is this working???', value, user.gradeLevel);
             let newScore = (value * 10) - user.gradeLevel;
             setScore(scoreOne + newScore);
+        } else {
+            setScore(scoreOne);
         }
         return score;
     }//end compareGrade
@@ -128,53 +129,59 @@ function AddClimb() {
     return (
         <div className="container">
             <form>
-                <div>
-                    <ToggleButtonGroup
-                        value={climbType}
-                        exclusive
-                        onChange={chooseClimbType}
-                    >
-                        <ToggleButton value="Auto Belay">AUTO BELAY</ToggleButton>
-                        <ToggleButton value="Top Rope">TOP ROPE</ToggleButton>
-                        <ToggleButton value="Lead">LEAD</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div>
-                    <CircularInput
-                        value={valueWithinLimits(value)}
-                        onChange={changeValue}
-                        radius={50}>
-                            <CircularTrack className="circularTrack"/>
-                            <CircularProgress className="circularProgress"/>
-                            <CircularThumb className="circularThumb"/>
-                            <text 
-                                x={50} 
-                                y={50} 
-                                textAnchor="middle" 
-                                dy="0.3em"
-                                fontSize="25" 
-                                fontWeight="bold">
-                                {grade}
-                            </text>
-                    </CircularInput>
-                </div>
-                <div>
-                    <ToggleButtonGroup
-                        value={bonusPoints}
-                        onChange={checkBonusPoints}
-                    >
-                        <ToggleButton value="Flash">FLASH</ToggleButton>
-                        <ToggleButton value="OnSight">ON SIGHT</ToggleButton>
-                        <ToggleButton value="Bonus">BONUS</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div>
-                    <h2>SCORE: {score}</h2>
-                </div>
-                <div>
-                <Button variant="outlined" onClick={goBack}>BACK</Button>
-                <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
-                </div>
+                <center>
+                    <div>
+                        <ToggleButtonGroup
+                            value={climbType}
+                            exclusive
+                            onChange={chooseClimbType}
+                        >
+                            <ToggleButton value="Auto Belay">AUTO BELAY</ToggleButton>
+                            <ToggleButton value="Top Rope">TOP ROPE</ToggleButton>
+                            <ToggleButton value="Lead">LEAD</ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
+                    <div>
+                        <CircularInput
+                            value={valueWithinLimits(value)}
+                            onChange={changeValue}
+                            radius={70}>
+                                <CircularTrack className="circularTrack"/>
+                                <CircularProgress className="circularProgress"/>
+                                <CircularThumb className="circularThumb"/>
+                                <text 
+                                    x={70} 
+                                    y={70} 
+                                    textAnchor="middle" 
+                                    dy="0.3em"
+                                    fontSize="35" 
+                                    fontWeight="bold">
+                                    {grade}
+                                </text>
+                        </CircularInput>
+                    </div>
+                    <div>
+                        <ToggleButtonGroup
+                            value={bonusPoints}
+                            onChange={checkBonusPoints}
+                        >
+                            <ToggleButton value="Flash">FLASH</ToggleButton>
+                            <ToggleButton value="OnSight">ON SIGHT</ToggleButton>
+                            <ToggleButton value="Bonus">BONUS</ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
+                    <div>
+                        <Typography 
+                            variant="h4"
+                            align="center"
+                        >SCORE: {score}
+                        </Typography>
+                    </div>
+                    <div>
+                        <Button variant="outlined" onClick={goBack}>BACK</Button>
+                        <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
+                    </div>
+                </center>
             </form>
         </div>
     )
