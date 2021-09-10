@@ -13,6 +13,8 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import InfoIcon from '@material-ui/icons/Info';
 import LogOutButton from '../LogOutButton/LogOutButton';
 
+import './userPage.css';
+
 
 function UserPage() {
   const history = useHistory();
@@ -73,18 +75,19 @@ function UserPage() {
 
   return (
     <div className="container">
-      
-      <div>
-      {['CLIMB ON'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
+      <div className="drawerButton">
+        {['CLIMB ON'].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+            <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
       </div>
-      <LogOutButton className="navLink" />
+      <div>
+        <LogOutButton className="navLink" />
+      </div>
     </div>
   );
 }

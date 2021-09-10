@@ -6,8 +6,6 @@ import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import { NoteTwoTone } from '@material-ui/icons';
-
 
 function AddClimb() {
     const history = useHistory();
@@ -127,7 +125,9 @@ function AddClimb() {
         dispatch({
             type: 'ADD_CLIMB',
             payload: climb
-        })
+        });
+
+        history.push('/user');
     }//end submitClimb
 
     //function to return to home page
