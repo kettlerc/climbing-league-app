@@ -20,16 +20,35 @@ function AddClimb() {
     const [isOnSight, setIsOnSight] = useState(false);
     const [isBonus, setIsBonus] = useState(false);
     const [bonusPoints, setBonusPoints] = useState(0);
+    const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
 
+    //parameters for choose climb dropdown
+    const chooseClimbType = (event, climbType) => {
+        setClimbType(climbType);
+        if (climbType === 'Auto Belay') {
+            setScoreOne(10);
+        } 
+        else if (climbType === 'Top Rope') {
+            setScoreOne(11);
+        } 
+        else if (climbType === 'Lead'){
+            setScoreOne(12);
+        }
+        return score;
+    }//end chooseClimbType
+
+
+    //function to compare climb grade against flash level
     const compareGrade = () => {
         if((value * 10) > user.gradeLevel){
             console.log('is this working???', value, user.gradeLevel);
             let newScore = (value * 10) - user.gradeLevel;
-            setScore(score + newScore);
+            setScore(scoreOne + newScore);
         }
         return score;
-    }
+    }//end compareGrade
+
 
     //variables and parameters for circular input
     const stepValue = v => Math.round(v * 10) / 10
@@ -38,6 +57,7 @@ function AddClimb() {
     const valueWithinLimits = v => Math.min(Math.max(v, min), max)
     const changeValue = v => {
         setValue(stepValue(v));
+        compareGrade();
         switch(value) {
             case 0.1:
                 setGrade('5.7')
@@ -69,6 +89,7 @@ function AddClimb() {
             }
         }
 
+    //function for adding extra bonus points
     const checkBonusPoints = (event, bonusPoints) => {
         setBonusPoints(bonusPoints);
         if('Flash'){
@@ -83,22 +104,8 @@ function AddClimb() {
             setIsBonus(true);
             setScore(score + 1);
         }  
-    }
+    }//end checkBonusPoints
 
-    //parameters for choose climb dropdown
-    const chooseClimbType = (event, climbType) => {
-        setClimbType(climbType);
-        if ('Auto Belay') {
-            setScore(score);
-        } 
-        if ('Top Rope') {
-            setScore(score + 1);
-        } 
-        if ('Lead'){
-            setScore(score + 2);
-        }
-        return score;
-    }
 
     //submit climb function
     const submitClimb = () => {
@@ -112,11 +119,13 @@ function AddClimb() {
             score
         }
         console.log(climb);
-    }
+    }//end submitClimb
 
+    //function to return to home page
     const goBack = () => {
         history.push('/user');
-    }
+    }//end goBack
+    
 
     return (
         <div className="container">
