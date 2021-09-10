@@ -22,6 +22,8 @@ function AddClimb() {
     const [bonusPoints, setBonusPoints] = useState(0);
     const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
 
     //parameters for choose climb dropdown
     const chooseClimbType = (event, climbType) => {
@@ -38,7 +40,6 @@ function AddClimb() {
         return score;
     }//end chooseClimbType
 
-
     //function to compare climb grade against flash level
     const compareGrade = () => {
         if((value * 10) > user.gradeLevel){
@@ -48,7 +49,6 @@ function AddClimb() {
         }
         return score;
     }//end compareGrade
-
 
     //variables and parameters for circular input
     const stepValue = v => Math.round(v * 10) / 10
@@ -92,20 +92,17 @@ function AddClimb() {
     //function for adding extra bonus points
     const checkBonusPoints = (event, bonusPoints) => {
         setBonusPoints(bonusPoints);
+        console.log('bonus points:', bonusPoints);
         if('Flash'){
-            setIsFlash(true);
             setScore(score + 1);
         }
         if('OnSight'){
-            setIsOnSight(true);
             setScore(score + 1);
         } 
         if('Bonus'){
-            setIsBonus(true);
             setScore(score + 1);
         }  
     }//end checkBonusPoints
-
 
     //submit climb function
     const submitClimb = () => {
@@ -116,6 +113,7 @@ function AddClimb() {
             isFlash,
             isOnSight,
             isBonus,
+            isSubmitted,
             score
         }
         console.log(climb);
@@ -125,7 +123,7 @@ function AddClimb() {
     const goBack = () => {
         history.push('/user');
     }//end goBack
-    
+
 
     return (
         <div className="container">
