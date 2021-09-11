@@ -22,14 +22,21 @@ function SubmitScores() {
 
     const handleChange = (event) => {
         setIsSubmitted(event.target.checked);
+        console.log(isSubmitted);
     };
 
     const onSubmitScores = () => {
         dispatch({
             type: 'SUBMIT_SCORES',
+            payload: isSubmitted
         })
-        history.push('/');
+        // history.push('/');
     }
+
+    //function to return to home page
+    const goBack = () => {
+        history.push('/user');
+    }//end goBack
 
     return (
         <>
@@ -62,6 +69,7 @@ function SubmitScores() {
             </TableContainer>
         </div>
         <div>
+            <Button variant="outlined" onClick={goBack}>BACK</Button>
             <Button variant="outlined" onClick={onSubmitScores}>SUBMIT SCORES</Button>
         </div>
         </>
