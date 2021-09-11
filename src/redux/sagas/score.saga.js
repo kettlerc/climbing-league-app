@@ -3,7 +3,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchRecentClimbs() {
     try {
-        const response = yield axios.get('/api/score', action.payload);
+        const response = yield axios.get('/api/score');
+        console.log('recent climbs response', response.data);
+        
         yield put({
             type: 'SET_RECENT_CLIMBS',
             payload: response.data

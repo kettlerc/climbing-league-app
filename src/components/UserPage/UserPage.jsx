@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -18,10 +19,13 @@ import { Typography } from '@material-ui/core';
 function UserPage() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const scores = useSelector((store) => store.score);
+  const user = useSelector((store) => store.user);
 
   useEffect(() => {
     dispatch({
-      type: 'FETCH_RECENT_CLIMBS'
+      type: 'FETCH_RECENT_CLIMBS',
+      payload: user.id
     });
   }, [dispatch]);
 
@@ -81,7 +85,28 @@ function UserPage() {
   return (
     <div className="container">
       <div>
-      
+        <TableContainer component={Paper}>
+        <Table aria-label="recent climbs">
+          <TableHead>
+            <TableRow>
+              <TableCell>DATE</TableCell>
+              <TableCell>GRADE</TableCell>
+              <TableCell>SCORE</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {scores.map((score) => (
+              <TableRow key={score.id}>
+                <TableCell component="th" scope="row">
+                  {score.date}
+                </TableCell>
+                <TableCell align="right">{score.climbGrade}</TableCell>
+                <TableCell align="right">{score.climbScore}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       </div>
       <div className="drawerButton">
         {[<FilterHdrIcon style={{ fontSize: 100}} color="primary"/>].map((anchor) => (

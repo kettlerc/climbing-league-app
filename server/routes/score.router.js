@@ -4,9 +4,19 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     const sqlQuery =`
-    
+        SELECT
+            "date",
+            "climbGrade",
+            "climbScore"
+        FROM "scores"
+        JOIN "user" on "scores"."climberId" = "user"."id"
+        WHERE "climberId" = $1
+        LIMIT 3;
     `;
-    pool.query(sqlQuery)
+    const sqlParams = [
+        req.user.id
+    ];
+    pool.query(sqlQuery, sqlParams)
         .then(result => {
             res.send(result.rows);
             console.log('recent climbs:', result.rows);   

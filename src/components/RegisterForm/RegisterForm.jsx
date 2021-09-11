@@ -188,7 +188,7 @@ function RegisterForm() {
           onChange={(event) => setTeamId(event.target.value)}>
           {teams.map(team => {
             return (
-              <option key={team.id}>{team.id}</option>
+              <option key={team.id}>{team.teamId}</option>
             );
           })}
         </select>
