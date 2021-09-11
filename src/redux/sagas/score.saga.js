@@ -15,8 +15,23 @@ function* fetchRecentClimbs() {
     }
 }
 
+function* submitScores() {
+    try {
+        const response = yield axios.put('/api/score');
+        console.log('submitted score!');
+        
+        yield put({
+            type: 'SCORES_SUBMITTED',
+            payload: response.data
+        })
+    } catch (error) {
+        console.error('Scores not submitted', error)
+    }
+}
+
 function* scoreSaga() {
     yield takeLatest('FETCH_RECENT_CLIMBS', fetchRecentClimbs);
+    yield takeLatest('SUBMIT_SCORES', submitScores)
 }
 
 export default scoreSaga;

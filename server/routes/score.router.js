@@ -7,11 +7,11 @@ router.get('/', (req, res) => {
         SELECT
             "date",
             "climbGrade",
-            "climbScore"
+            "climbScore",
+            "isSubmitted"
         FROM "scores"
         JOIN "user" on "scores"."climberId" = "user"."id"
-        WHERE "climberId" = $1
-        LIMIT 3;
+        WHERE "climberId" = $1;
     `;
     const sqlParams = [
         req.user.id
@@ -51,6 +51,11 @@ router.post('/', (req, res) => {
             res.sendStatus(500);
         });
 });
+
+router.put('/', (req, res) => {
+    console.log('PUTPUT');
+    
+})
 
 
 module.exports = router;
