@@ -10,7 +10,8 @@ router.get('/', (req, res) => {
         .then(result => {
             res.send(result.rows);
             console.log('result is:', result.rows);      
-        }) .catch (err => {
+        }) 
+        .catch (err => {
             console.error('GET teams error', err);
             res.sendStatus(500)
         })

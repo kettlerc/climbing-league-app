@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* addClimb (action) {
     try {
-        yield axios.post('/api/addClimb', action.payload);
+        yield axios.post('/api/score', action.payload);
         console.log('payload is:', action.payload);
     } catch (error) {
         console.log('error with addClimb', error);   

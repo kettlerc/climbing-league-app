@@ -2,6 +2,21 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    const sqlQuery =`
+    
+    `;
+    pool.query(sqlQuery)
+        .then(result => {
+            res.send(result.rows);
+            console.log('recent climbs:', result.rows);   
+        })
+        .catch (err => {
+            console.error('GET recent climbs error', err);
+            res.sendStatus(500)
+        })
+});
+
 router.post('/', (req, res) => {
     sqlQuery=`
         INSERT INTO "scores"

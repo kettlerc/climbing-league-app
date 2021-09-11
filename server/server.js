@@ -28,7 +28,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/teams', teamRouter);
 app.use('/api/userinfo', userInfoRouter);
-app.use('/api/addClimb', scoreRouter);
+app.use('/api/score', scoreRouter);
 
 
 // Serve static files

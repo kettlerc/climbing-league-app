@@ -1,24 +1,29 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import InfoIcon from '@material-ui/icons/Info';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import FilterHdrIcon from '@material-ui/icons/FilterHdr';
 
 import './userPage.css';
+import { Typography } from '@material-ui/core';
 
 
 function UserPage() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_RECENT_CLIMBS'
+    });
+  }, [dispatch]);
 
   //parameters for drawer component
   const [state, setState] = React.useState({
@@ -75,8 +80,11 @@ function UserPage() {
 
   return (
     <div className="container">
+      <div>
+      
+      </div>
       <div className="drawerButton">
-        {['CLIMB ON'].map((anchor) => (
+        {[<FilterHdrIcon style={{ fontSize: 100}} color="primary"/>].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
             <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
