@@ -38,6 +38,12 @@ function SubmitScores() {
         history.push('/user');
     }//end goBack
 
+    //function for fomratting date
+    function formatDate(date) {
+        let d = new Date(date);
+        return d.toLocaleDateString();
+    }//end formatDate
+
     return (
         <>
         <div>
@@ -59,7 +65,7 @@ function SubmitScores() {
                                 inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}>
                                     </Checkbox>
                     </TableCell>
-                    <TableCell align="right">{score.date}</TableCell>
+                    <TableCell align="right">{formatDate(score.date)}</TableCell>
                     <TableCell align="right">{score.climbGrade}</TableCell>
                     <TableCell align="right">{score.climbScore}</TableCell>
                     </TableRow>
@@ -69,8 +75,10 @@ function SubmitScores() {
             </TableContainer>
         </div>
         <div>
-            <Button variant="outlined" onClick={goBack}>BACK</Button>
-            <Button variant="outlined" onClick={onSubmitScores}>SUBMIT SCORES</Button>
+            <center>
+                <Button variant="outlined" onClick={goBack}>BACK</Button>
+                <Button variant="outlined" onClick={onSubmitScores}>SUBMIT SCORES</Button>
+            </center>
         </div>
         </>
     )

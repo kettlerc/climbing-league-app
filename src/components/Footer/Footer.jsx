@@ -27,7 +27,7 @@ function Footer() {
             <LogOutButton className="navLink" />
           </>
         )}
-  return <footer>&copy; Curtis Kettler 2021</footer>;
+  return <footer><img src="base_textlogo_transparent_background.png" alt="" /></footer>;
 
 }
 

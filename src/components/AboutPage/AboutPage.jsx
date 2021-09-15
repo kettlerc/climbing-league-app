@@ -10,6 +10,18 @@ function AboutPage() {
     <div className="container">
       <div>
         <p>This about page is for anyone to read!</p>
+        <h3>Technologies Used</h3>
+        <ul>
+          <li>React</li>
+          <li>Redux</li>
+          <li>Redux-Sagas</li>
+          <li>Node.js</li>
+          <li>Express</li>
+          <li>Postgresql</li>
+          <li>Material-UI</li>
+          <li>React Circular Input</li>
+        </ul>
+        <h3>Special Thanks</h3>
       </div>
     </div>
   );

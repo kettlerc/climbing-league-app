@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -24,6 +25,7 @@ function AddClimb() {
     const [score, setScore] = useState(10);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [date, setDate] = useState('2008-11-11');
+    const [open, setOpen] = useState(false);
 
 
     //parameters for choose climb dropdown
@@ -135,6 +137,13 @@ function AddClimb() {
         history.push('/user');
     }//end goBack
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className="container">
@@ -189,7 +198,27 @@ function AddClimb() {
                     </div>
                     <div>
                         <Button variant="outlined" onClick={goBack}>BACK</Button>
-                        <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
+                        <Button variant="outlined" onClick={handleClickOpen}>SUBMIT CLIMB</Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}>
+                            <DialogTitle>{"Would you like to add this climb?"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>TYPE OF CLIMB: {climbType}</DialogContentText>
+                                <DialogContentText>GRADE: {grade}</DialogContentText>
+                                <DialogContentText>FLASH: {isFlash}</DialogContentText>
+                                <DialogContentText>ON SIGHT: {isOnSight}</DialogContentText>
+                                <DialogContentText>TOTAL SCORE: {score}</DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={submitClimb} color="primary" autoFocus>
+                                    Add Climb
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
                 </center>
             </form>
