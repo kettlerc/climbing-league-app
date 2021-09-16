@@ -2,12 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import SubmitScoresItem from '../SubmitScoresItem/SubmitScoresItem';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@material-ui/core';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles({
+    btn: {
+        marginTop: 30,
+        marginBottom: 30
+    },
+    input: {
+        marginTop: 10,
+        marginBottom: 5
+    },
+    title: {
+      marginTop: 30
+    }
+})
 
 function SubmitScores() {
+    const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const scores = useSelector((store) => store.score);
@@ -47,6 +62,7 @@ function SubmitScores() {
     return (
         <>
         <div>
+            <Typography variant="overline" style={{marginLeft: 20}}>My Climbs This Week</Typography>
             <TableContainer component={Paper}>
                 <Table aria-label="recent climbs">
                     <TableHead>
@@ -70,8 +86,8 @@ function SubmitScores() {
         </div>
         <div>
             <center>
-            <Button variant="outlined" onClick={goBack}>BACK</Button>
-            <Button variant="outlined" onClick={handleClickOpen}>SUBMIT CLIMB</Button>
+            <Button className={classes.btn} variant="outlined" onClick={goBack} size="large">BACK</Button>
+            <Button className={classes.btn} variant="outlined" onClick={handleClickOpen} size="large">SUBMIT CLIMB</Button>
             <Dialog
                 open={open}
                 onClose={handleClose}>

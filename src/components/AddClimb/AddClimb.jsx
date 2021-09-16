@@ -151,12 +151,16 @@ function AddClimb() {
         for (let bonus of bonuses) {
             if (bonus === 'Flash'){
                 setBonusScore(bonuses.length);
-            } else if (bonus === "OnSight"){
+                setIsFlash(true);
+            } else if (bonus === 'OnSight'){
                 setBonusScore(bonuses.length);
-            } else if (bonus === "Bonus"){
+                setIsOnSight(true);
+            } else if (bonus === 'Bonus'){
                 setBonusScore(bonuses.length);
-            } 
+                setIsBonus(true);
+            }
         }
+        console.log('flash', isFlash);
     }//end checkBonusPoints
 
 
@@ -209,7 +213,7 @@ function AddClimb() {
                     </div>
                     <div>
                         <Typography 
-                            variant="h5"
+                            variant="h4"
                             align="center"
                         >SCORE: {score + bonusScore + typeScore}
                         </Typography>
