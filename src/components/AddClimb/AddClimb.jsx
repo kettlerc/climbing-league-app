@@ -21,7 +21,7 @@ function AddClimb() {
     const [isFlash, setIsFlash] = useState(false);
     const [isOnSight, setIsOnSight] = useState(false);
     const [isBonus, setIsBonus] = useState(false);
-    const [bonusPoints, setBonusPoints] = useState([]);
+    const [bonuses, setBonuses] = useState([]);
     const [bonusScore, setBonusScore] = useState(0);
     const [typeScore, setTypeScore] = useState(0);
     const [scoreOne, setScoreOne] = useState(10);
@@ -137,23 +137,17 @@ function AddClimb() {
     }//end chooseClimbType
 
     //function for adding extra bonus points
-    const checkBonusPoints = (event, bonusPoints) => {
-        setBonusPoints(bonusPoints);
-        console.log('bonus points:', bonusPoints);
-        for (let bonus of bonusPoints) {
+    const checkBonuses = (event, bonuses) => {
+        setBonuses(bonuses);
+        console.log('bonuses:', bonuses);
+        for (let bonus of bonuses) {
             if (bonus === 'Flash'){
-                setIsFlash(true);
-                console.log("isFlash?", isFlash);
-                setBonusScore(bonusPoints.length);
+                setBonusScore(bonuses.length);
             } else if (bonus === "OnSight"){
-                console.log("IsOnSight?", isOnSight);
-                setIsOnSight(true);
-                setBonusScore(bonusPoints.length);
+                setBonusScore(bonuses.length);
             } else if (bonus === "Bonus"){
-                console.log(isBonus);
-                setIsBonus(true);
-                setBonusScore(bonusPoints.length);
-            }
+                setBonusScore(bonuses.length);
+            } 
         }
     }//end checkBonusPoints
 
@@ -194,8 +188,8 @@ function AddClimb() {
                     </div>
                     <div>
                         <ToggleButtonGroup
-                            value={bonusPoints}
-                            onChange={checkBonusPoints}
+                            value={bonuses}
+                            onChange={checkBonuses}
                         >
                             <ToggleButton value="Flash">FLASH</ToggleButton>
                             <ToggleButton value="OnSight">ON SIGHT</ToggleButton>
@@ -219,9 +213,8 @@ function AddClimb() {
                             <DialogContent>
                                 <DialogContentText>TYPE OF CLIMB: {climbType}</DialogContentText>
                                 <DialogContentText>GRADE: {grade}</DialogContentText>
-                                <DialogContentText>FLASH: {isFlash}</DialogContentText>
-                                <DialogContentText>ON SIGHT: {isOnSight}</DialogContentText>
-                                <DialogContentText>TOTAL SCORE: {score}</DialogContentText>
+                                <DialogContentText>BONUSES: {bonuses}</DialogContentText>
+                                <DialogContentText>TOTAL SCORE: {score + bonusScore + typeScore}</DialogContentText>
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose} color="primary">
