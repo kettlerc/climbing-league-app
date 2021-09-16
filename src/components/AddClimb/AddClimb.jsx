@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import Moment from 'react-moment';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -19,36 +21,21 @@ function AddClimb() {
     const [isFlash, setIsFlash] = useState(false);
     const [isOnSight, setIsOnSight] = useState(false);
     const [isBonus, setIsBonus] = useState(false);
-    const [bonusPoints, setBonusPoints] = useState(0);
+    const [bonuses, setBonuses] = useState([]);
+    const [bonusScore, setBonusScore] = useState(0);
+    const [typeScore, setTypeScore] = useState(0);
     const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [date, setDate] = useState('2008-11-11');
-
-
-    //parameters for choose climb dropdown
-    const chooseClimbType = (event, climbType) => {
-        setClimbType(climbType);
-        if (climbType === 'Auto Belay') {
-            setScoreOne(10);
-        } 
-        else if (climbType === 'Top Rope') {
-            setScoreOne(11);
-        } 
-        else if (climbType === 'Lead'){
-            setScoreOne(12);
-        }
-        return score;
-    }//end chooseClimbType
+    const [date, setDate] = useState('1111-11-11');
+    const [open, setOpen] = useState(false);
 
     //function to compare climb grade against flash level
-    const compareGrade = () => {
-        if((value * 10) > user.gradeLevel){
-            let newScore = (value * 10) - user.gradeLevel;
+    const compareGrade = (currentValue) => {
+        if((currentValue * 10) >= user.gradeLevel){
+            let newScore = (currentValue * 10) - user.gradeLevel;
             setScore(scoreOne + newScore);
-        } else {
-            setScore(scoreOne);
-        }
+        } 
         return score;
     }//end compareGrade
 
@@ -58,9 +45,11 @@ function AddClimb() {
     const max = 0.9
     const valueWithinLimits = v => Math.min(Math.max(v, min), max)
     const changeValue = v => {
-        setValue(stepValue(v));
-        compareGrade();
-        switch(value) {
+        console.log('stepvalue:', stepValue(v));
+        const currentValue = stepValue(v);
+        setValue(currentValue);
+        compareGrade(currentValue);
+        switch(currentValue) {
             case 0.1:
                 setGrade('5.7')
                 break;
@@ -91,20 +80,7 @@ function AddClimb() {
             }
         }
 
-    //function for adding extra bonus points
-    const checkBonusPoints = (event, bonusPoints) => {
-        setBonusPoints(bonusPoints);
-        console.log('bonus points:', bonusPoints);
-        if('Flash'){
-            setScore(score + 1);
-        }
-        if('OnSight'){
-            setScore(score + 1);
-        } 
-        if('Bonus'){
-            setScore(score + 1);
-        }  
-    }//end checkBonusPoints
+    
 
     //submit climb function
     const submitClimb = () => {
@@ -117,10 +93,10 @@ function AddClimb() {
             isBonus,
             isSubmitted,
             climbScore: score,
-            date: date,
+            date,
             climberId: user.id
         }
-        console.log(climb);
+        // console.log(climb);
 
         dispatch({
             type: 'ADD_CLIMB',
@@ -134,6 +110,46 @@ function AddClimb() {
     const goBack = () => {
         history.push('/user');
     }//end goBack
+
+    //functions to open and close dialog box
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+
+    //parameters for choose climb dropdown
+    const chooseClimbType = (event, climbType) => {
+        setClimbType(climbType);
+        // console.log('climbtype:', climbType);
+        if (climbType !== 'Lead' && climbType === 'Top Rope') {
+            setTypeScore(1);
+        } 
+        else if (climbType === 'Lead' && climbType !== 'Tope Rope'){
+            setTypeScore(2);
+        }
+        else if (climbType !== 'Lead' && climbType !== 'Top Rope') {
+            setTypeScore(0);
+        }  
+    }//end chooseClimbType
+
+    //function for adding extra bonus points
+    const checkBonuses = (event, bonuses) => {
+        setBonuses(bonuses);
+        console.log('bonuses:', bonuses);
+        for (let bonus of bonuses) {
+            if (bonus === 'Flash'){
+                setBonusScore(bonuses.length);
+            } else if (bonus === "OnSight"){
+                setBonusScore(bonuses.length);
+            } else if (bonus === "Bonus"){
+                setBonusScore(bonuses.length);
+            } 
+        }
+    }//end checkBonusPoints
 
 
     return (
@@ -172,8 +188,8 @@ function AddClimb() {
                     </div>
                     <div>
                         <ToggleButtonGroup
-                            value={bonusPoints}
-                            onChange={checkBonusPoints}
+                            value={bonuses}
+                            onChange={checkBonuses}
                         >
                             <ToggleButton value="Flash">FLASH</ToggleButton>
                             <ToggleButton value="OnSight">ON SIGHT</ToggleButton>
@@ -184,12 +200,31 @@ function AddClimb() {
                         <Typography 
                             variant="h4"
                             align="center"
-                        >SCORE: {score}
+                        >SCORE: {score + bonusScore + typeScore}
                         </Typography>
                     </div>
                     <div>
                         <Button variant="outlined" onClick={goBack}>BACK</Button>
-                        <Button variant="outlined" onClick={submitClimb}>SUBMIT CLIMB</Button>
+                        <Button variant="outlined" onClick={handleClickOpen}>SUBMIT CLIMB</Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}>
+                            <DialogTitle>{"Would you like to add this climb?"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>TYPE OF CLIMB: {climbType}</DialogContentText>
+                                <DialogContentText>GRADE: {grade}</DialogContentText>
+                                <DialogContentText>BONUSES: {bonuses}</DialogContentText>
+                                <DialogContentText>TOTAL SCORE: {score + bonusScore + typeScore}</DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={submitClimb} color="primary" autoFocus>
+                                    Add Climb
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
                 </center>
             </form>

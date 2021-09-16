@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
@@ -14,7 +17,7 @@ function RegisterForm() {
   const [flashLevel, setFlashLevel] = useState('5.7');
   const [gradeValue, setGradeValue] = useState(0);
   const [photo, setPhoto] = useState('');
-  const [teamId, setTeamId] = useState(0);
+  const [teamId, setTeamId] = useState("");
 
   const [value, setValue] = useState(0.1);
 
@@ -94,9 +97,9 @@ function RegisterForm() {
     }
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
+    <FormControl className="formPanel">
       <center>
-      <Typography variant="h4">REGISTER</Typography>
+      <Typography variant="h6">PERSONAL INFORMATION</Typography>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
@@ -119,6 +122,7 @@ function RegisterForm() {
         <label htmlFor="password">
           <TextField
             variant="outlined"
+            type="password"
             name="password"
             placeholder="password"
             size="small"
@@ -154,8 +158,20 @@ function RegisterForm() {
           />
         </label>
       </div>
+      {/* <div>
+        <input
+          accept="image/*"
+          multiple
+          type="file"
+        />
+        <label htmlFor="outlined-button-file">
+          <Button variant="outlined" color="primary" component="span">
+            UPLOAD PHOTO
+          </Button>
+        </label>
+      </div> */}
       <div>
-        <Typography variant="h6" gutterBottom>FLASH LEVEL</Typography>
+        <Typography variant="h6" gutterBottom>SET YOUR FLASH LEVEL</Typography>
       </div>
       <div>
         <label htmlFor="flashLevel"></label>
@@ -178,30 +194,31 @@ function RegisterForm() {
           </CircularInput>
       </div>
       <div>
-        <Typography variant="h6" gutterBottom>TEAM</Typography>
+        <Typography variant="h6" gutterBottom>SELECT A TEAM</Typography>
       </div>
       <div>
-        <select
+        <Select
           variant="outlined"
           value={teamId}
           required
           onChange={(event) => setTeamId(event.target.value)}>
           {teams.map(team => {
             return (
-              <option key={team.id}>{team.teamId}</option>
+              <MenuItem key={team.id} value={team.id}>{team.teamName}</MenuItem>
             );
           })}
-        </select>
+        </Select>
       </div>
       <div>
         <Button
           variant="outlined"
           className="btn"
           type="submit"
+          onClick={registerUser}
         >Register & Login</Button>
       </div>
       </center>
-    </form>
+    </FormControl>
   );
 }
 

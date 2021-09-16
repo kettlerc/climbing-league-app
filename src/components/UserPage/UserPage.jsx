@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { useHistory } from 'react-router';
 import Drawer from '@material-ui/core/Drawer';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -18,16 +16,7 @@ import { Typography } from '@material-ui/core';
 
 function UserPage() {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const scores = useSelector((store) => store.score);
-  const user = useSelector((store) => store.user);
 
-  useEffect(() => {
-    dispatch({
-      type: 'FETCH_RECENT_CLIMBS',
-      payload: user.id
-    });
-  }, [dispatch]);
 
   //parameters for drawer component
   const [state, setState] = React.useState({
@@ -84,32 +73,8 @@ function UserPage() {
 
   return (
     <div className="container">
-      <div>
-        <TableContainer component={Paper}>
-        <Table aria-label="recent climbs">
-          <TableHead>
-            <TableRow>
-              <TableCell>DATE</TableCell>
-              <TableCell>GRADE</TableCell>
-              <TableCell>SCORE</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {scores.map((score) => (
-              <TableRow key={score.id}>
-                <TableCell component="th" scope="row">
-                  {score.date}
-                </TableCell>
-                <TableCell align="right">{score.climbGrade}</TableCell>
-                <TableCell align="right">{score.climbScore}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </div>
       <div className="drawerButton">
-        {[<FilterHdrIcon style={{ fontSize: 100}} color="primary"/>].map((anchor) => (
+        {[<Typography variant="h3">MENU</Typography>].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
             <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
@@ -117,9 +82,6 @@ function UserPage() {
             </Drawer>
           </React.Fragment>
         ))}
-      </div>
-      <div>
-        <LogOutButton className="navLink" />
       </div>
     </div>
   );
