@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import Moment from 'react-moment';
 import { CircularInput, CircularTrack, CircularProgress, CircularThumb, } from 'react-circular-input'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    btn: {
+        marginTop: 30,
+        marginBottom: 30
+    }
+})
 
 function AddClimb() {
+    const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
@@ -158,6 +166,7 @@ function AddClimb() {
                 <center>
                     <div>
                         <ToggleButtonGroup
+                            className={classes.btn}
                             value={climbType}
                             exclusive
                             onChange={chooseClimbType}
@@ -169,6 +178,7 @@ function AddClimb() {
                     </div>
                     <div>
                         <CircularInput
+                            className={classes.btn}
                             value={valueWithinLimits(value)}
                             onChange={changeValue}
                             radius={70}>
@@ -188,6 +198,7 @@ function AddClimb() {
                     </div>
                     <div>
                         <ToggleButtonGroup
+                            className={classes.btn}
                             value={bonuses}
                             onChange={checkBonuses}
                         >
@@ -198,14 +209,14 @@ function AddClimb() {
                     </div>
                     <div>
                         <Typography 
-                            variant="h4"
+                            variant="h5"
                             align="center"
                         >SCORE: {score + bonusScore + typeScore}
                         </Typography>
                     </div>
-                    <div>
-                        <Button variant="outlined" onClick={goBack}>BACK</Button>
-                        <Button variant="outlined" onClick={handleClickOpen}>SUBMIT CLIMB</Button>
+                    <div className={classes.btn}>
+                        <Button variant="outlined" onClick={goBack} size="large">BACK</Button>
+                        <Button variant="outlined" onClick={handleClickOpen} size="large">SUBMIT CLIMB</Button>
                         <Dialog
                             open={open}
                             onClose={handleClose}>

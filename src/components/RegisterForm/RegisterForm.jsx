@@ -7,9 +7,25 @@ import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles({
+    btn: {
+        marginTop: 30,
+        marginBottom: 30
+    },
+    input: {
+        marginTop: 10,
+        marginBottom: 5
+    },
+    title: {
+      marginTop: 30
+    }
+})
 
 function RegisterForm() {
+  const classes = useStyles();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -99,7 +115,7 @@ function RegisterForm() {
   return (
     <FormControl className="formPanel">
       <center>
-      <Typography variant="h6">PERSONAL INFORMATION</Typography>
+      <Typography className={classes.title} variant="h6">PERSONAL INFORMATION</Typography>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
@@ -108,6 +124,7 @@ function RegisterForm() {
       <div>
         <label htmlFor="username">
           <TextField
+            className={classes.input}
             variant="outlined"
             name="username"
             placeholder="username"
@@ -121,6 +138,7 @@ function RegisterForm() {
       <div>
         <label htmlFor="password">
           <TextField
+            className={classes.input}
             variant="outlined"
             type="password"
             name="password"
@@ -135,6 +153,7 @@ function RegisterForm() {
       <div>
         <label htmlFor="firstName">
           <TextField
+            className={classes.input}
             variant="outlined"
             name="firstName"
             placeholder="first name"
@@ -148,6 +167,7 @@ function RegisterForm() {
       <div>
         <label htmlFor="lastName">
           <TextField
+            className={classes.input}
             variant="outlined"
             name="lastName"
             placeholder="last name"
@@ -171,11 +191,12 @@ function RegisterForm() {
         </label>
       </div> */}
       <div>
-        <Typography variant="h6" gutterBottom>SET YOUR FLASH LEVEL</Typography>
+        <Typography variant="h6" className={classes.title} gutterBottom>SET YOUR FLASH LEVEL</Typography>
       </div>
       <div>
         <label htmlFor="flashLevel"></label>
         <CircularInput
+        className={classes.input}
             value={valueWithinLimits(value)}
             onChange={changeValue}
             radius={50}>
@@ -194,10 +215,11 @@ function RegisterForm() {
           </CircularInput>
       </div>
       <div>
-        <Typography variant="h6" gutterBottom>SELECT A TEAM</Typography>
+        <Typography variant="h6" className={classes.title} gutterBottom>SELECT A TEAM</Typography>
       </div>
       <div>
         <Select
+        className={classes.input}
           variant="outlined"
           value={teamId}
           required
@@ -212,9 +234,10 @@ function RegisterForm() {
       <div>
         <Button
           variant="outlined"
-          className="btn"
+          className={classes.btn}
           type="submit"
           onClick={registerUser}
+          size="large"
         >Register & Login</Button>
       </div>
       </center>

@@ -74,7 +74,7 @@ function UserPage() {
   return (
     <div className="container">
       <div className="drawerButton">
-        {[<Typography variant="h3">MENU</Typography>].map((anchor) => (
+        {[<Typography variant="h4">CLIMB ON</Typography>].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
             <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
