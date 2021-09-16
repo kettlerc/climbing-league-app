@@ -74,7 +74,7 @@ function UserPage() {
   return (
     <div className="container">
       <div className="drawerButton">
-        {[<FilterHdrIcon style={{ fontSize: 100}} color="primary"/>].map((anchor) => (
+        {[<Typography variant="h3">MENU</Typography>].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
             <Drawer anchor="left" open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
@@ -82,9 +82,6 @@ function UserPage() {
             </Drawer>
           </React.Fragment>
         ))}
-      </div>
-      <div>
-        <LogOutButton className="navLink" />
       </div>
     </div>
   );

@@ -59,11 +59,11 @@ function SubmitScores() {
                 </TableHead>
                 <TableBody>
                 {scores.map((score) => (
-                    <TableRow key={score.climbScore}>
+                    <TableRow key={score.id}>
                     <TableCell><Checkbox 
                                 onChange={handleChange} 
                                 inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}>
-                                    </Checkbox>
+                                </Checkbox>
                     </TableCell>
                     <TableCell align="right">{formatDate(score.date)}</TableCell>
                     <TableCell align="right">{score.climbGrade}</TableCell>

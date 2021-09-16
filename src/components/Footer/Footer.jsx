@@ -20,14 +20,17 @@ function Footer() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
             <LogOutButton className="navLink" />
           </>
         )}
-  return <footer><img src="base_textlogo_transparent_background.png" alt="" /></footer>;
+  return <footer>
+            <img src="base_textlogo_transparent_background.png" alt="" />
+            {user.id && (
+              <>
+                <LogOutButton className="navLink" />
+              </>
+            )}
+          </footer>;
 
 }
 
