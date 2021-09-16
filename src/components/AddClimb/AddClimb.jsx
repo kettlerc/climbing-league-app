@@ -88,32 +88,6 @@ function AddClimb() {
             }
         }
 
-    
-
-    //submit climb function
-    const submitClimb = () => {
-        compareGrade();
-        let climb = {
-            climbType,
-            climbGrade: grade,
-            isFlash,
-            isOnSight,
-            isBonus,
-            isSubmitted,
-            climbScore: score,
-            date,
-            climberId: user.id
-        }
-        // console.log(climb);
-
-        dispatch({
-            type: 'ADD_CLIMB',
-            payload: climb
-        });
-
-        history.push('/user');
-    }//end submitClimb
-
     //function to return to home page
     const goBack = () => {
         history.push('/user');
@@ -126,8 +100,6 @@ function AddClimb() {
     const handleClose = () => {
         setOpen(false);
     };
-
-
 
     //parameters for choose climb dropdown
     const chooseClimbType = (event, climbType) => {
@@ -146,22 +118,42 @@ function AddClimb() {
 
     //function for adding extra bonus points
     const checkBonuses = (event, bonuses) => {
+        const clickedButton = event.target.innerText;
         setBonuses(bonuses);
-        console.log('bonuses:', bonuses);
-        for (let bonus of bonuses) {
-            if (bonus === 'Flash'){
-                setBonusScore(bonuses.length);
-                setIsFlash(true);
-            } else if (bonus === 'OnSight'){
-                setBonusScore(bonuses.length);
-                setIsOnSight(true);
-            } else if (bonus === 'Bonus'){
-                setBonusScore(bonuses.length);
-                setIsBonus(true);
-            }
+        setBonusScore(bonuses.length);
+        if (clickedButton === 'FLASH') {
+            setIsFlash(!isFlash)
+        } else if (clickedButton === 'ON SIGHT') {
+            setIsOnSight(!isOnSight)
+        } else if (clickedButton === 'BONUS') {
+            setIsBonus(!isBonus)
         }
-        console.log('flash', isFlash);
     }//end checkBonusPoints
+
+    //submit climb function
+    const submitClimb = () => {
+        compareGrade();
+        let climb = {
+            climbType,
+            climbGrade: grade,
+            isFlash,
+            isOnSight,
+            isBonus,
+            isSubmitted,
+            climbScore: score,
+            date,
+            climberId: user.id
+        }
+
+        dispatch({
+            type: 'ADD_CLIMB',
+            payload: climb
+        });
+
+        history.push('/user');
+        //may need to move this to saga
+        console.log(climb);
+    }//end submitClimb
 
 
     return (
