@@ -5,6 +5,16 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  typography: {
+    fontSize: 24,
+    fontFamily: [
+      'Bebas Neue', 
+      'cursive',
+    ].join(',')
+  },});
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -34,6 +44,7 @@ function App() {
   }, [dispatch]);
 
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <div>
         <Nav />
@@ -123,6 +134,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 

@@ -89,6 +89,7 @@ function UserPage() {
           </React.Fragment>
         ))}
       </div>
+      <LogOutButton />
     </div>
   );
 }

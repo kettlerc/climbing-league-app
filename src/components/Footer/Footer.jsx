@@ -7,31 +7,16 @@ import { useSelector } from 'react-redux';
 
 
 function Footer() {
-    const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.user);
 
-        {/* If no user is logged in, show these links */}
-        {user.id === null &&
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        }
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <LogOutButton className="navLink" />
-          </>
-        )}
   return <footer>
             <img src="base_textlogo_transparent_background.png" alt="" />
-            {user.id && (
+            {/* {user.id && (
               <>
                 <LogOutButton className="navLink" />
               </>
-            )}
+            )} */}
           </footer>;
-
 }
 
 export default Footer;

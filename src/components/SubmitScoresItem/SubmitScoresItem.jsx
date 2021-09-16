@@ -7,7 +7,7 @@ function SubmitScoresItem({score}) {
     const [isSubmitted, setIsSubmitted] = useState(true);
 
     const handleChange = (event) => {
-        setIsSubmitted(event.target.checked);
+        setIsSubmitted(!isSubmitted);
         console.log(isSubmitted);
     };
 
