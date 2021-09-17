@@ -9,7 +9,6 @@ function AboutPage() {
   return (
     <div className="container">
       <div>
-        <p>This about page is for anyone to read!</p>
         <h3>Technologies Used</h3>
         <ul>
           <li>React</li>
@@ -21,7 +20,14 @@ function AboutPage() {
           <li>Material-UI</li>
           <li>React Circular Input</li>
         </ul>
+        <h3>Hardest Challenge?</h3>
+        <p>Definitely the scoring...</p>
+        <h3>Future Features</h3>
+        <p>More climb details, view teammate's climbs</p>
         <h3>Special Thanks</h3>
+        <p>All of the Prime staff, but especially Edan and Matt.</p>
+        <p>The entire Mersenne Cohort.</p>
+        <p>My wife and family.</p>
       </div>
     </div>
   );

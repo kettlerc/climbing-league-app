@@ -14,7 +14,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             "isSubmitted"
         FROM "scores"
         JOIN "user" on "scores"."climberId" = "user"."id"
-        WHERE "climberId" = $1;
+        WHERE "climberId" = $1
+        ORDER BY 
+            "date";
     `;
     const sqlParams = [
         req.user.id
@@ -56,7 +58,21 @@ router.post('/', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-    console.log('PUTPUT');
+    sqlQuery =`
+        UPDATE "scores"
+        SET "isSubmitted" = true
+        WHERE "id" = $1;
+    `;
+    sqlParams = [
+        req.body.id
+    ];
+    console.log('id is', sqlParams);
+    pool.query(sqlQuery)
+        .then(() => res.sendStatus(200))
+        .catch((err) => {
+            console.log('submit scores failed', err);
+            res.sendStatus(500);
+        })
     
 })
 

@@ -5,6 +5,7 @@ import SubmitScoresItem from '../SubmitScoresItem/SubmitScoresItem';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@material-ui/core';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -46,6 +47,17 @@ function SubmitScores() {
         history.push('/');
     }
 
+    const handleChange = (event) => {
+        setIsSubmitted(!isSubmitted);
+        console.log(isSubmitted);
+    };
+
+    //function for formatting date
+    function formatDate(date) {
+        let d = new Date(date);
+        return d.toLocaleDateString();
+    }//end formatDate
+
     //functions to open and close dialog box
     const handleClickOpen = () => {
         setOpen(true);
@@ -62,7 +74,7 @@ function SubmitScores() {
     return (
         <>
         <div>
-            <Typography variant="overline" style={{marginLeft: 20}}>My Climbs This Week</Typography>
+            <Typography variant="h6" style={{marginLeft: 20}}>My Climbs This Week</Typography>
             <TableContainer component={Paper}>
                 <Table aria-label="recent climbs">
                     <TableHead>
@@ -75,10 +87,17 @@ function SubmitScores() {
                     </TableHead>
                     <TableBody >
                         {scores.map((score) => (
-                            <SubmitScoresItem
-                                key={score.id} 
-                                score={score}
-                            />
+                            <TableRow>
+                                <TableCell>
+                                    <Checkbox 
+                                    onChange={handleChange} 
+                                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}>
+                                    </Checkbox>
+                                </TableCell>
+                                <TableCell align="right">{formatDate(score.date)}</TableCell>
+                                <TableCell align="right">{score.climbGrade}</TableCell>
+                                <TableCell align="right">{score.climbScore}</TableCell>
+                            </TableRow>
                         ))}
                     </TableBody>
                 </Table>
