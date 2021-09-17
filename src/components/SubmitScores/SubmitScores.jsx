@@ -31,6 +31,7 @@ function SubmitScores() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [open, setOpen] = useState(false);
     const [totalScore, setTotalScore] = useState(0);
+    const [selectedScores, setSelectedScores] = useState([]);
 
     useEffect(() => {
         dispatch({
@@ -42,14 +43,16 @@ function SubmitScores() {
     const onSubmitScores = () => {
         dispatch({
             type: 'SUBMIT_SCORES',
-            payload: isSubmitted
+            payload: selectedScores
         })
         history.push('/');
+        console.log('scores is', scores);
     }
 
     const handleChange = (event) => {
         setIsSubmitted(!isSubmitted);
-        console.log(isSubmitted);
+        setSelectedScores(...selectedScores, scores.id);
+        console.log(selectedScores);
     };
 
     //function for formatting date
@@ -112,7 +115,7 @@ function SubmitScores() {
                 onClose={handleClose}>
                 <DialogTitle>{"Would you like to submit your scores?"}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>Selected scores will be shown here</DialogContentText>
+                        <DialogContentText></DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">

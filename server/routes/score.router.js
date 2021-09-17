@@ -35,8 +35,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/', (req, res) => {
     sqlQuery=`
         INSERT INTO "scores"
-        ("climbType", "climbGrade", "isFlash", "isOnSight", "isBonus", "isSubmitted", "climbScore", "date", "climberId")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+        ("climbType", "climbGrade", "isFlash", "isOnSight", "isBonus", "isSubmitted", "climbScore", "climberId")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
     `;
     sqlParams = [
         req.body.climbType,
@@ -46,7 +46,6 @@ router.post('/', (req, res) => {
         req.body.isBonus,
         req.body.isSubmitted,
         req.body.climbScore,
-        req.body.date,
         req.body.climberId
     ];
     pool.query(sqlQuery, sqlParams)
@@ -61,10 +60,10 @@ router.put('/', (req, res) => {
     sqlQuery =`
         UPDATE "scores"
         SET "isSubmitted" = true
-        WHERE "id" = $1;
+        WHERE "id" IN ($1, $2, $3);
     `;
     sqlParams = [
-        req.body.id
+        req.body
     ];
     console.log('id is', sqlParams);
     pool.query(sqlQuery)

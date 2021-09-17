@@ -35,7 +35,6 @@ function AddClimb() {
     const [scoreOne, setScoreOne] = useState(10);
     const [score, setScore] = useState(10);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [date, setDate] = useState('1111-11-11');
     const [open, setOpen] = useState(false);
 
     //function to compare climb grade against flash level
@@ -141,7 +140,6 @@ function AddClimb() {
             isBonus,
             isSubmitted,
             climbScore: score,
-            date,
             climberId: user.id
         }
 

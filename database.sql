@@ -11,14 +11,6 @@ CREATE TABLE "user" (
 );
 
 
--- INSERT INTO "user"
--- ("username", "password", "firstName", "lastName", "flashLevel", "photo", "teamId")
--- VALUES
--- ('curtisClimbs', '123456', 'Curtis', 'Kettler', '5.9', 'imgurl', 1),
--- ('FreeSolo', '123456', 'Alex', 'Honold', '5.14', 'imgurl', 1),
--- ('cliffhanger4eva', '123456', 'Sylvester', 'Stallone', '5.10', 'imgurl', 1);
-
-
 DROP TABLE "user";
 
 
@@ -58,13 +50,14 @@ CREATE TABLE "scores" (
 	"isFlash" BOOLEAN,
 	"isOnSight" BOOLEAN,
 	"isBonus" BOOLEAN,
+	"isSubmitted" BOOLEAN,
 	"climbScore" INTEGER,
 	"date" DATE,
-	"climberId" INT REFERENCES "user" 
+	"climberId" INT REFERENCES "user"
 );
 
 INSERT INTO "scores"
-("climbType", "climbGrade", "isFlash", "isOnSight", "isBonus", "date", "climberId")
+("climbType", "climbGrade", "isFlash", "isOnSight", "isBonus", "isSubmitted", "date", "climberId")
 VALUES
 ('Top Rope', '5.10', true, false, false, '2020-11-11', 1);
 
@@ -79,3 +72,15 @@ SELECT
 FROM "user"
 JOIN "team" ON "user"."teamId" = "team"."id"
 WHERE "user"."id" = 1;
+
+SELECT
+	"date",
+	"climbGrade",
+	"climbScore"
+FROM "scores"
+JOIN "user" on "scores"."climberId" = "user"."id"
+WHERE "user"."id" = 1;
+
+UPDATE "scores"
+SET "isSubmitted" = true
+WHERE "id" = $1;
